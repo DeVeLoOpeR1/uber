@@ -34,11 +34,11 @@ public class Cab {
         this.driver = driver;
     }
 
-    public int getCabId() {
+    public int getId() {
         return cabId;
     }
 
-    public void setCabId(int cabId) {
+    public void setId(int cabId) {
         this.cabId = cabId;
     }
 
@@ -50,7 +50,7 @@ public class Cab {
         this.perKmRate = perKmRate;
     }
 
-    public boolean isAvailable() {
+    public boolean getAvailable() {
         return available;
     }
 

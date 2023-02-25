@@ -43,35 +43,30 @@ public class CustomerServiceImpl implements CustomerService {
 		// Avoid using SQL query
 
 		TripBooking tripBooking = new TripBooking();
-		tripBooking.setFromLocation(fromLocation);
-		tripBooking.setToLocation(toLocation);
-		tripBooking.setDistanceInKm(distanceInKm);
-		tripBooking.setStatus(TripStatus.CONFIRMED);
-		Customer customer = null;
-		try{
-			customer = customerRepository2.findById(customerId).get();
-		}
-		catch(Exception e){
-			throw new Exception("No value present");
-		}
-		tripBooking.setCustomer(customer);
+
 		List<Driver> driverList = driverRepository2.findAll();
 		Driver driver = null;
 		boolean avail = false;
 		for(Driver driver1 : driverList){
 
 			Cab cab = driver1.getCab();
-			if(cab.getAvailable()){
+			if(!avail && cab.getAvailable()){
 				avail=true;
 				driver = driver1;
-				break;
 			}
 
 		}
 		if(!avail){
 			throw new Exception("No cab available!");
 		}
-		System.out.println(driver +" driver available or not please check it there");
+		tripBooking.setFromLocation(fromLocation);
+		tripBooking.setToLocation(toLocation);
+		tripBooking.setDistanceInKm(distanceInKm);
+		tripBooking.setStatus(TripStatus.CONFIRMED);
+		Customer customer = customerRepository2.findById(customerId).get();
+
+		tripBooking.setCustomer(customer);
+		//System.out.println(driver +" driver available or not please check it there");
 		//set driver to trip Booking
 		tripBooking.setDriver(driver);
 
@@ -86,16 +81,15 @@ public class CustomerServiceImpl implements CustomerService {
 
 		// update driver trip list
 		driver.getTripBookingList().add(tripBooking);
-
+		driverRepository2.save(driver);
 
 		//update customer trip list
 		customer.getTripBookingList().add(tripBooking);
-		
+		customerRepository2.save(customer);
 		//customerRepository2.save(customer);
 
 
-		customerRepository2.save(customer);
-		driverRepository2.save(driver);
+
 		return tripBooking;
 
 	}

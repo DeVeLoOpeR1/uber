@@ -85,10 +85,11 @@ public class CustomerServiceImpl implements CustomerService {
 
 		//update customer trip list
 		customer.getTripBookingList().add(tripBooking);
-		customerRepository2.save(customer);
+
 		//customerRepository2.save(customer);
 
 
+		customerRepository2.save(customer);
 
 		return tripBooking;
 

@@ -89,6 +89,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 
 		customerRepository2.save(customer);
+		driverRepository2.save(driver);
 		return tripBooking;
 
 	}
@@ -98,6 +99,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 		TripBooking tripBooking = tripBookingRepository2.findById(tripId).get();
 		tripBooking.setStatus(TripStatus.CANCELED);
+
 		tripBookingRepository2.save(tripBooking);
 	}
 

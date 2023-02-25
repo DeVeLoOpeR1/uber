@@ -39,8 +39,8 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public TripBooking bookTrip(int customerId, String fromLocation, String toLocation, int distanceInKm) throws Exception{
-		//Book the driver with lowest driverId who is free (cab available variable is Boolean.TRUE). If no driver is available, throw "No cab available!" exception
-		//Avoid using SQL query
+		// Book the driver with lowest driverId who is free (cab available variable is Boolean.TRUE). If no driver is available, throw "No cab available!" exception
+		// Avoid using SQL query
 
 		TripBooking tripBooking = new TripBooking();
 		tripBooking.setFromLocation(fromLocation);
@@ -63,7 +63,8 @@ public class CustomerServiceImpl implements CustomerService {
 
 		}
 		if(!avail){
-			throw new Exception("No cab available!");
+			throw new Exception("No value present");
+			//throw new Exception("No cab available!");
 		}
 		System.out.println(driver +" driver available or not please check it there");
 		//set driver to trip Booking
@@ -99,13 +100,14 @@ public class CustomerServiceImpl implements CustomerService {
 
 		TripBooking tripBooking = tripBookingRepository2.findById(tripId).get();
 		tripBooking.setStatus(TripStatus.CANCELED);
+		tripBooking.setBill(0); // set the bill amount to zero for cancel ride
 
 		tripBookingRepository2.save(tripBooking);
 	}
 
 	@Override
 	public void completeTrip(Integer tripId){
-		//Complete the trip having given trip Id and update TripBooking attributes accordingly
+		//Complete the trip having given trip id and update TripBooking attributes accordingly
 
 		TripBooking tripBooking = tripBookingRepository2.findById(tripId).get();
 		tripBooking.setStatus(TripStatus.COMPLETED);
